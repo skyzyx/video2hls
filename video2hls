@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """Convert a video into a set of files to play it using HLS.
 
@@ -96,11 +96,11 @@ def parse_args():
 
     g = parser.add_argument_group("video options")
     g.add_argument("--video-widths", metavar="WIDTH",
-                   default=[3840, 1920, 1280, 854, 640, 428],
+                   default=[3840, 2560, 1920, 1280, 854, 640, 428],
                    nargs="+", type=int,
                    help="video resolutions (width in pixels)")
     g.add_argument("--video-bitrates", metavar="RATE",
-                   default=[14000, 4500, 2500, 1300, 800, 400],
+                   default=[14000, 6500, 4500, 2500, 1300, 800, 400],
                    nargs="+", type=int,
                    help="video bitrates (in kbits/s)")
     g.add_argument("--video-codecs", metavar="CODEC",
@@ -108,7 +108,7 @@ def parse_args():
                    nargs="+", type=str,
                    help="video codecs")
     g.add_argument("--video-profiles", metavar="PROFILE",
-                   default=["high@5.1", "main@3.2", "main@3.1"],
+                   default=["high@5.1", "high@5.1", "main@3.2", "main@3.1"],
                    nargs="+", type=str,
                    help="video profile (name@level)")
     g.add_argument("--video-names", metavar="NAME",
@@ -189,6 +189,9 @@ def parse_args():
                    default=10,
                    type=int,
                    help="poster quality (from 0 to 100)")
+    g.add_argument("--poster-grayscale", default=False,
+                   action="store_true",
+                   help="convert poster to grayscale")
     g.add_argument("--poster-filename", metavar="FILE",
                    default="poster.jpg",
                    type=str,
@@ -557,6 +560,8 @@ def poster(options, technical):
                                    (options.poster_width, resolution))
     vfilter.append(f'scale={twidth}:{theight}')
     logger.info(f"poster is {twidth}x{theight}")
+    if options.poster_grayscale:
+        vfilter.append(f'format=gray')
 
     # Quality
     quality = options.poster_quality * 30 // 100
