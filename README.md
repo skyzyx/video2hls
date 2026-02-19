@@ -15,7 +15,7 @@ Some browsers may not support natively HLS. In this case, one can use
 this format. See this [blog post][] for more information.
 
 [hls.js]: https://github.com/video-dev/hls.js/
-[blog post]: https://www.exoscale.ch/syslog/2018/02/07/self-hosted-videos/
+[blog post]: https://vincent.bernat.ch/en/blog/2018-self-hosted-videos
 
 ## Examples
 
@@ -40,6 +40,6 @@ Specify more bitrates:
        TearsOfSteel.mp4
 
 When using `--debug`, you'll get a detailed explanation of the
-commandes executed (and you can copy/paste them):
+executed commands (and you can copy/paste them):
 
     ./video2hls --debug TearsOfSteel.mp4
